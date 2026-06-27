@@ -38,7 +38,10 @@ const Navbar = ({ search, setSearch }) => {
             Logout
           </button>
         ) : (
-          <Link to="/login">Login</Link>
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
+          </>
         )}
       </div>
     </nav>
