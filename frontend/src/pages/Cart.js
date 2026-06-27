@@ -7,9 +7,10 @@ const Cart = () => {
 
   const userId = localStorage.getItem("userId");
 
-  useEffect(() => {
-    fetchCart();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
+  fetchCart();
+}, []);
 
   // 📦 Fetch Cart Items
   const fetchCart = async () => {

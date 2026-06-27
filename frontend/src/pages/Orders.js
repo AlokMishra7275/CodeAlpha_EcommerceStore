@@ -6,10 +6,10 @@ const Orders = () => {
 
   const userId = localStorage.getItem("userId");
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+useEffect(() => {
+  fetchOrders();
+}, []);
   // 📦 FETCH ORDERS
   const fetchOrders = async () => {
     try {
