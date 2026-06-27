@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
 const Orders = () => {
@@ -6,21 +6,24 @@ const Orders = () => {
 
   const userId = localStorage.getItem("userId");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-useEffect(() => {
-  fetchOrders();
-}, []);
   // 📦 FETCH ORDERS
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     try {
       const res = await axios.get(
         `https://codealpha-ecommercestore-ypuy.onrender.com/api/orders/${userId}`
       );
+
       setOrders(res.data);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchOrders();
+    }
+  }, [fetchOrders, userId]);
 
   // 🔒 if not logged in
   if (!userId) {

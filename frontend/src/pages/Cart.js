@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import "./Cart.css";
 
@@ -7,13 +7,8 @@ const Cart = () => {
 
   const userId = localStorage.getItem("userId");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-useEffect(() => {
-  fetchCart();
-}, []);
-
   // 📦 Fetch Cart Items
-  const fetchCart = async () => {
+  const fetchCart = useCallback(async () => {
     try {
       const res = await axios.get(
         `https://codealpha-ecommercestore-ypuy.onrender.com/api/cart?userId=${userId}`
@@ -23,7 +18,13 @@ useEffect(() => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      fetchCart();
+    }
+  }, [fetchCart, userId]);
 
   // 💰 Calculate Total
   const getTotal = () => {
@@ -52,19 +53,22 @@ useEffect(() => {
       alert("Order failed ❌");
     }
   };
-  // remove items from the cart
+
+  // 🗑️ Remove Item
   const removeItem = async (cartId) => {
-  try {
-    await axios.delete(`https://codealpha-ecommercestore-ypuy.onrender.com/api/cart/${cartId}`);
+    try {
+      await axios.delete(
+        `https://codealpha-ecommercestore-ypuy.onrender.com/api/cart/${cartId}`
+      );
 
-    alert("Item removed successfully 🗑️");
+      alert("Item removed successfully 🗑️");
 
-    fetchCart();
-  } catch (error) {
-    console.log(error);
-    alert("Failed to remove item");
-  }
-};
+      fetchCart();
+    } catch (error) {
+      console.log(error);
+      alert("Failed to remove item");
+    }
+  };
 
   // 🔒 Not Logged In
   if (!userId) {
@@ -99,20 +103,19 @@ useEffect(() => {
                 <strong>Subtotal:</strong> ₹
                 {item.productId.price * item.quantity}
               </p>
+
               <button
-  onClick={() => removeItem(item._id)}
-  className="remove-btn"
->
-  Remove ❌
-</button>
+                onClick={() => removeItem(item._id)}
+                className="remove-btn"
+              >
+                Remove ❌
+              </button>
             </div>
           ))}
 
           <hr />
 
-          <h2 className="cart-total">
-            💰 Total: ₹{getTotal()}
-          </h2>
+          <h2 className="cart-total">💰 Total: ₹{getTotal()}</h2>
 
           <button
             onClick={placeOrder}
