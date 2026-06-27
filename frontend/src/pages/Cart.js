@@ -15,7 +15,7 @@ const Cart = () => {
   const fetchCart = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/cart?userId=${userId}`
+        `https://codealpha-ecommercestore-ypuy.onrender.com/api/cart?userId=${userId}`
       );
 
       setCartItems(res.data);
@@ -36,7 +36,7 @@ const Cart = () => {
   const placeOrder = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/orders",
+        "https://codealpha-ecommercestore-ypuy.onrender.com/api/orders",
         {
           userId,
         }
@@ -54,7 +54,7 @@ const Cart = () => {
   // remove items from the cart
   const removeItem = async (cartId) => {
   try {
-    await axios.delete(`http://localhost:5000/api/cart/${cartId}`);
+    await axios.delete(`https://codealpha-ecommercestore-ypuy.onrender.com/api/cart/${cartId}`);
 
     alert("Item removed successfully 🗑️");
 

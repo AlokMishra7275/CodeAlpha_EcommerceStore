@@ -11,7 +11,7 @@ fetchProducts();
 
 const fetchProducts = async () => {
 try {
-const res = await axios.get("http://localhost:5000/api/products");
+const res = await axios.get("https://codealpha-ecommercestore-ypuy.onrender.com/api/products");
 setProducts(res.data);
 } catch (error) {
 console.log("Error fetching products:", error);
@@ -28,7 +28,7 @@ if (!token || !userId) {
 
 try {
   await axios.post(
-    "http://localhost:5000/api/cart",
+    "https://codealpha-ecommercestore-ypuy.onrender.com/api/cart",
     {
       userId,
       productId,
