@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+
 
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
-// eslint-disable-next-line react-hooks/exhaustive-deps
+
   useEffect(() => {
-    fetchProduct();
-  }, []);
+  fetchProduct();
+}, [fetchProduct]);
 
-  const fetchProduct = async () => {
-    try {
-      const res = await axios.get(
-        `https://codealpha-ecommercestore-ypuy.onrender.com/api/products/${id}`
-      );
+  const fetchProduct = useCallback(async () => {
+  try {
+    const res = await axios.get(
+      `https://codealpha-ecommercestore-ypuy.onrender.com/api/products/${id}`
+    );
 
-      setProduct(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    setProduct(res.data);
+  } catch (error) {
+    console.log(error);
+  }
+}, [id]);
 
   const addToCart = async () => {
     const token = localStorage.getItem("token");
