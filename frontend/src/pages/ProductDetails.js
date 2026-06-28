@@ -7,7 +7,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
 
   const [product, setProduct] = useState(null);
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchProduct();
   }, []);
