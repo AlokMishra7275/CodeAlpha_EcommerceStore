@@ -9,21 +9,21 @@ const ProductDetails = () => {
 
   const [product, setProduct] = useState(null);
 
-  useEffect(() => {
-  fetchProduct();
-}, [fetchProduct]);
-
   const fetchProduct = useCallback(async () => {
-  try {
-    const res = await axios.get(
-      `https://codealpha-ecommercestore-ypuy.onrender.com/api/products/${id}`
-    );
+    try {
+      const res = await axios.get(
+        `https://codealpha-ecommercestore-ypuy.onrender.com/api/products/${id}`
+      );
 
-    setProduct(res.data);
-  } catch (error) {
-    console.log(error);
-  }
-}, [id]);
+      setProduct(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchProduct();
+  }, [fetchProduct]);
 
   const addToCart = async () => {
     const token = localStorage.getItem("token");
