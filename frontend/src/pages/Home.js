@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Home.css";
-
+import { Link } from "react-router-dom";
 function Home({ search }) {
 const [products, setProducts] = useState([]);
 
@@ -59,16 +59,21 @@ return ( <div className="products-page"> <div className="hero"> <h1>🛍️ Welc
     {filteredProducts.length > 0 ? (
       filteredProducts.map((product) => (
         <div key={product._id} className="product-card">
-          <img
-            src={
-              product.image ||
-              "https://via.placeholder.com/250x220?text=Product"
-            }
-            alt={product.name}
-            className="product-image"
-          />
+    <Link
+     to={`/product/${product._id}`}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
+  <img
+    src={
+      product.image ||
+      "https://via.placeholder.com/250x220?text=Product"
+    }
+    alt={product.name}
+    className="product-image"
+  />
 
-          <h3 className="product-title">{product.name}</h3>
+  <h3 className="product-title">{product.name}</h3>
+     </Link>
 
           <p className="price">₹{product.price}</p>
 
