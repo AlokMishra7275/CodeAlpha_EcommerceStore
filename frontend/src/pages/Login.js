@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import "./Login.css";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await axios.post(
@@ -19,45 +26,89 @@ const Login = () => {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.user.id);
+      localStorage.setItem("userName", res.data.user.name);
 
       alert("Login Successful ✅");
 
-      console.log(res.data);
+      navigate("/");
     } catch (error) {
       console.log(error);
-      alert("Login Failed ❌");
+      alert("Invalid Email or Password ❌");
     }
+
+    setLoading(false);
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Login</h1>
+    <div className="login-page">
+      <div className="login-card">
 
-      <form onSubmit={handleLogin}>
-        <div>
+        <h1>🛍️ E-Commerce Store</h1>
+
+        <h2>Welcome Back</h2>
+
+        <p className="subtitle">
+          Login to continue shopping
+        </p>
+
+        <form onSubmit={handleLogin}>
+
           <input
             type="email"
-            placeholder="Enter Email"
+            placeholder="📧 Enter Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
-        </div>
 
-        <br />
+          <div className="password-box">
 
-        <div>
-          <input
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="🔒 Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-        <br />
+            <span
+              className="show-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "🙈" : "👁"}
+            </span>
 
-        <button type="submit">Login</button>
-      </form>
+          </div>
+
+          <div className="options">
+
+            <label>
+              <input type="checkbox" />
+              Remember Me
+            </label>
+
+            <span className="forgot">
+              Forgot Password?
+            </span>
+
+          </div>
+
+          <button
+            type="submit"
+            className="login-btn"
+            disabled={loading}
+          >
+            {loading ? "Logging In..." : "Login"}
+          </button>
+
+        </form>
+
+        <p className="bottom-text">
+          Don't have an account?
+          <Link to="/register"> Register</Link>
+        </p>
+
+      </div>
     </div>
   );
 };

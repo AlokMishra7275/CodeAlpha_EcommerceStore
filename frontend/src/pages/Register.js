@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import "./Register.css";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       const res = await axios.post(
@@ -21,48 +30,80 @@ const Register = () => {
 
       alert(res.data.message);
 
-      window.location.href = "/login";
+      navigate("/login");
     } catch (error) {
       alert(error.response?.data?.message || "Registration Failed");
     }
+
+    setLoading(false);
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Create Account</h1>
+    <div className="register-page">
+      <div className="register-card">
 
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <h1>🛍️ E-Commerce Store</h1>
 
-        <br /><br />
+        <h2>Create Account</h2>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <p className="subtitle">
+          Join us and start shopping today
+        </p>
 
-        <br /><br />
+        <form onSubmit={handleRegister}>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            type="text"
+            placeholder="👤 Full Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-        <br /><br />
+          <input
+            type="email"
+            placeholder="📧 Email Address"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit">
-          Register
-        </button>
-      </form>
+          <div className="password-box">
+
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="🔒 Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+
+            <span
+              className="show-btn"
+              onClick={() =>
+                setShowPassword(!showPassword)
+              }
+            >
+              {showPassword ? "🙈" : "👁"}
+            </span>
+
+          </div>
+
+          <button
+            className="register-btn"
+            disabled={loading}
+          >
+            {loading ? "Creating Account..." : "Register"}
+          </button>
+
+        </form>
+
+        <p className="bottom-text">
+          Already have an account?
+          <Link to="/login"> Login</Link>
+        </p>
+
+      </div>
     </div>
   );
 };

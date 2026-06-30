@@ -1,24 +1,50 @@
+/* ===== Navbar ===== */
+
 .navbar {
-  background: #131921;
+  background: linear-gradient(90deg, #131921, #232f3e);
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 15px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
 }
 
+/* ===== Logo ===== */
+
 .logo {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
+  color: white;
+  text-decoration: none;
+  transition: 0.3s;
 }
+
+.logo:hover {
+  color: #facc15;
+  transform: scale(1.05);
+}
+
+/* ===== Search Box ===== */
 
 .search-box {
   width: 40%;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 12px 18px;
+  border-radius: 30px;
   border: none;
   outline: none;
+  font-size: 16px;
+  transition: 0.3s;
 }
+
+.search-box:focus {
+  box-shadow: 0 0 10px #facc15;
+}
+
+/* ===== Navigation ===== */
 
 .nav-links {
   display: flex;
@@ -29,22 +55,59 @@
 .nav-links a {
   color: white;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  transition: 0.3s;
 }
 
 .nav-links a:hover {
   color: #facc15;
 }
 
+/* ===== Welcome ===== */
+
+.welcome {
+  color: #facc15;
+  font-weight: bold;
+}
+
+/* ===== Logout Button ===== */
+
 .logout-btn {
-  background: #dc2626;
+  background: #e63946;
   color: white;
   border: none;
-  padding: 8px 14px;
-  border-radius: 5px;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
 }
 
 .logout-btn:hover {
   background: #b91c1c;
+  transform: translateY(-2px);
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 900px) {
+  .navbar {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .search-box {
+    width: 90%;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
 }

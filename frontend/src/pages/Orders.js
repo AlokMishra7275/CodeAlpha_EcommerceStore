@@ -57,7 +57,9 @@ const Orders = () => {
 
             <h4>Products:</h4>
 
-            {order.products.map((p) => (
+            {order.products
+              .filter((p) => p.productId)
+              .map((p) => (
               <div key={p._id} style={{ marginLeft: "10px" }}>
                 <p>Product: {p.productId.name}</p>
                 <p>Quantity: {p.quantity}</p>

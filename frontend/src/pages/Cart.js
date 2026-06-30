@@ -87,7 +87,9 @@ const Cart = () => {
         <p>Your cart is empty 😢</p>
       ) : (
         <>
-          {cartItems.map((item) => (
+          {cartItems
+           .filter((item) => item.productId)
+           .map((item) => (
             <div key={item._id} className="cart-item">
               <h3>{item.productId.name}</h3>
 
